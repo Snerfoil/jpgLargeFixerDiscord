@@ -1,0 +1,4 @@
+discord.py
+python-magic
+requests
+psycopg2
