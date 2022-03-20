@@ -92,7 +92,7 @@ async def on_message(message):
     
     isDM = False
     try:
-        print(botSettings[message.guild.id]) #message.guild.id is None when its a DM or other.
+        print(message.guild.id) #message.guild.id is None when its a DM or other.
     except KeyError:
         botSettings[message.guild.id] = {}
         botSettings[message.guild.id]['targetChannel'] = None
