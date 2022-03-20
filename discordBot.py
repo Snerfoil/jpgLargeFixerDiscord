@@ -131,7 +131,7 @@ async def on_message(message):
             await message.channel.send('processed files.',files=gatheredFiles)
     
     print("===debug===")
-    print(message.channel.id)
+    print(message.guild.id)
     print('===debug===')
     
     if(isChannel):
