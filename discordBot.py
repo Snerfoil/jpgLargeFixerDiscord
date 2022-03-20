@@ -86,13 +86,13 @@ async def on_message(message):
     print('====FROM=====')
     print(message.author) #very obvious msg spy thingy. you may wana remove this.
     print(message.author.id)
-    print('=============')
+    print('====GUILD====')
     if message.author == disClient.user:
         return
     
     isDM = False
     try:
-        botSettings[message.guild.id] #message.guild.id is None when its a DM or other.
+        print(botSettings[message.guild.id]) #message.guild.id is None when its a DM or other.
     except KeyError:
         botSettings[message.guild.id] = {}
         botSettings[message.guild.id]['targetChannel'] = None
@@ -100,8 +100,9 @@ async def on_message(message):
         botSettings[message.guild.id]['whitelistedRoles'] = set() #SAVE
         writeChanges(botSettings,'dat')
     except AttributeError:
+        print('DM')
         isDM = True
-    
+    print('=============')
     scanCommand = False
     try:
         if(not message.author.guild_permissions.administrator): #mystery error, but sometimes the author is a none type. no idea wtf it is.
@@ -114,10 +115,8 @@ async def on_message(message):
         pass
     
     isChannel = False
-    isInGuild = False
     try:
         isChannel = message.channel.id == botSettings[message.guild.id]['targetChannel']
-        isInGuild = True
     except AttributeError:
         pass
     
@@ -132,10 +131,7 @@ async def on_message(message):
         if(len(gatheredFiles)>0):
             await message.channel.send('processed files.',files=gatheredFiles)
     
-    print("===debug===")
-    print('===debug===')
-    
-    if(isInGuild):
+    if(not isDM):
         if message.content.startswith(botSettings[message.guild.id]['commandExt']+'targetChannelHere') and scanCommand:
             botSettings[message.guild.id]['targetChannel'] = message.channel.id #SAVE
             writeChanges(botSettings,'dat')
