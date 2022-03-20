@@ -114,8 +114,10 @@ async def on_message(message):
         pass
     
     isChannel = False
+    isInGuild = False
     try:
         isChannel = message.channel.id == botSettings[message.guild.id]['targetChannel']
+        isInGuild = True
     except AttributeError:
         pass
     
@@ -131,10 +133,9 @@ async def on_message(message):
             await message.channel.send('processed files.',files=gatheredFiles)
     
     print("===debug===")
-    print(message.guild.id)
     print('===debug===')
     
-    if(isChannel):
+    if(isInGuild):
         if message.content.startswith(botSettings[message.guild.id]['commandExt']+'targetChannelHere') and scanCommand:
             botSettings[message.guild.id]['targetChannel'] = message.channel.id #SAVE
             writeChanges(botSettings,'dat')
