@@ -130,6 +130,8 @@ async def on_message(message):
         if(len(gatheredFiles)>0):
             await message.channel.send('processed files.',files=gatheredFiles)
     
+    print(isChannel)
+    
     if(isChannel):
         if message.content.startswith(botSettings[message.guild.id]['commandExt']+'targetChannelHere') and scanCommand:
             botSettings[message.guild.id]['targetChannel'] = message.channel.id #SAVE
